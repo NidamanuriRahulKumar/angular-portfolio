@@ -6,16 +6,16 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/NidamanuriRahulKumar/angular-portfolio.git'
             }
         }
-        // stage('clean') {
-        //     steps {
-        //         sh "mvn clean"
-        //     }
-        // }
-        // stage('package') {
-        //     steps {
-        //         sh "mvn package"
-        //     }
-        // }
+        stage('npm install') {
+             steps {
+                 sh "npm install"
+             }
+         }
+         stage('ng build') {
+             steps {
+                 sh "ng build"
+             }
+         }
         // stage('docker build') {
         //     steps {
         //         sh "docker build -t employee-management ."
@@ -23,13 +23,13 @@ pipeline {
         // }
         stage('docker build') {
              steps {
-                 sh "docker build"
+                 sh "docker build -t angular-portfolio"
              }
         }
 
         stage('docker running') {
              steps {
-                 sh "docker container run -d -p 90:90 --name portfolio myportfolio"
+                 sh "docker container run -d -p 90:90 --name portfolio angular-portfolio"
              }
         }
     }
