@@ -23,13 +23,13 @@ pipeline {
         // }
         stage('docker compose build') {
              steps {
-                 sh "docker-compose build"
+                 sh "docker build"
              }
         }
 
-        stage('docker compose start') {
+        stage('docker running') {
              steps {
-                 sh "docker-compose up"
+                 sh "docker container run -d -p 90:90 --name portfolio myportfolio"
              }
         }
     }
