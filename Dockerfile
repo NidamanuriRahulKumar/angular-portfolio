@@ -1,24 +1,10 @@
-FROM node:current-alpine3.11 as build-stage
-
-# RUN mkdir -p /app
-
-WORKDIR /usr/src/app
-
+FROM node:16.14.0-alpine AS build
+RUN npm i -g @angular/cli@13.1.0
+WORKDIR /app
 COPY package.json package-lock.json ./
-
 RUN npm install
-
 COPY . .
+RUN ng build --prod
 
-RUN npm run build --prod
-
-# CMD ["npm", "start"]
-
-FROM nginx:latest-alpine as prod-stage
-
-COPY --from=build-stage /usr/src/app/dist/my-movie-plan /user/share/nginx/html
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 4040
-
+FROM nginx 
+COPY --from=build /app/dist/Personal-Portfolio-Angular/ /usr/share/nginx/html/
