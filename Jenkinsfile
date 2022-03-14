@@ -21,7 +21,7 @@ pipeline {
         //         sh "docker build -t employee-management ."
         //     }
         // }
-        stage('docker compose build') {
+        stage('docker build') {
              steps {
                  sh "docker build"
              }
